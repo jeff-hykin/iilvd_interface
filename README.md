@@ -24,22 +24,23 @@ Make sure you're connected to the TAMU VPN, you'll get a connection error otherw
 - (If you don't, then please make a git repository for your project) 
 
 We need to download the code to your project, import it, and then use it
-1. Download
-Open up a terminal/CMD/console to that project. e.g. `cd YourProjectFolder` 
-then run `git submodule add https://github.com/jeff-hykin/iilvd_interface`. This will add a `iilvd_interface` folder to your project.
-2. Importing the code
-Presumably you have a python file, lets say `yourCode.py`. There's a full example of how to import the code here: [python/example.py](https://github.com/jeff-hykin/iilvd_interface/blob/51b78bad14b93b6b2801d36a6a5890d5fdaeb08b/python/example.py#L4) To import the code you'll need to add that folder (iilvd_interface) to your Python path.
+1. Download <br>
+Open up a terminal/CMD/console to that project. e.g. `cd YourProjectFolder`<br> 
+Then run `git submodule add https://github.com/jeff-hykin/iilvd_interface`.<br>
+This will add a `iilvd_interface` folder to your project.
+2. Importing the code<br>
+Presumably you have a python file, lets say `yourCode.py`. There's a full example of how to import the code here: [python/example.py](https://github.com/jeff-hykin/iilvd_interface/blob/51b78bad14b93b6b2801d36a6a5890d5fdaeb08b/python/example.py#L4) To import the code you'll need to add that folder (iilvd_interface) to your Python path.<br><br>
    ```python
    import sys
    import time
    sys.path.append("./iilvd_interface/python")
    ```
-   Then you want to import the actual tools
+   Then you want to import the actual tools<br><br>
    ```python
    import DB, DatabaseVideo, VideoSelect from video_toolkit
    ```
 ## Using the tools
-
+<br><br><br>
 ### Selecting Videos
 Get all the videos, in no particular order, do the following
 ```python
@@ -54,7 +55,7 @@ for each_video_object in VideoSelect().has_basic_info.retrive():
 ```
 
 There is also the `has_related_videos` filter, and `is_downloaded` filter. (There will be more of these in the future)
-
+<br><br><br>
 ### Data about a video
 
 Take a look at the [data_format.yaml](https://github.com/jeff-hykin/iilvd_interface/blob/51b78bad14b93b6b2801d36a6a5890d5fdaeb08b/data_format.yaml#L4) which describes all of the avalible fields for videos and what the exact names of the fields are. Note that most of the fields are optional, so there will need to be code checking to make sure they exist.
@@ -74,7 +75,7 @@ video_object.path    # path to .mp4 file IF the video is downloaded
 video_object["basic_info", "duration"] # makes a network request for only the duration
 video_object["related_videos", 0] # makes a requst for only the related
 ```
-
+<br><br><br>
 ### Efficient Data Access
 
 The database uses MongoDB on the backend, so you can use the [MongoDB find-queries](https://docs.mongodb.com/manual/reference/operator/query/) directly as follows:
