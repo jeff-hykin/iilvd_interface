@@ -9,6 +9,7 @@
 - Lets you analyze duration, fps, height-in-pixels, related videos, etc
 - Auto-downloads videos and retrieves them frame-by-frame as cv2 images
 
+<br><br>
 
 # Python: How to use
 
