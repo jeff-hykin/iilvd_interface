@@ -6,7 +6,7 @@
 
 # What does repo provide?
 - Lets you query what kinds of videos are avalible
-- Lets you analyze duration, fps, pixel height/width, related videos
+- Lets you analyze duration, fps, height-in-pixels, related videos, etc
 - Auto-downloads videos and retrieves them frame-by-frame as cv2 images
 
 
