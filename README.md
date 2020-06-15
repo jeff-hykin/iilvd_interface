@@ -1,10 +1,10 @@
 
 # Overview
-- git clone some code
-- import a class
-- tell the class what videos you want to retrieve
+- download code with git clone 
+- import a module
+- tell the module what videos you want to retrieve
 
-# What does this do
+# What does repo provide?
 - Lets you query what kinds of videos are avalible
 - Lets you analyze duration, fps, pixel height/width, related videos
 - Auto-downloads videos and retrieves them frame-by-frame as cv2 images
