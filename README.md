@@ -30,11 +30,13 @@ Open up a terminal/CMD/console to that project. e.g. `cd YourProjectFolder`<br>
 Then run `git submodule add https://github.com/jeff-hykin/iilvd_interface`.<br>
 This will add a `iilvd_interface` folder to your project.
 2. Importing the code<br>
-Presumably you have a python file, lets say `yourCode.py`. <br> There's a full example of how to import the code here: [python/example.py](https://github.com/jeff-hykin/iilvd_interface/blob/51b78bad14b93b6b2801d36a6a5890d5fdaeb08b/python/example.py#L4)<br>To import the code you'll need to add that folder (iilvd_interface) to your Python path.<br><br>
+Presumably you have a python file, lets say `your_code.py`. <br> And inside `your_code.py` you want to get access to some videos.<br>There's a full example of how to do that here: [python/example.py](https://github.com/jeff-hykin/iilvd_interface/blob/51b78bad14b93b6b2801d36a6a5890d5fdaeb08b/python/example.py#L4)<br> Here's the basic steps that are done inside that example. To import the code you'll need to add that folder (iilvd_interface) to your Python path.<br><br>
    ```python
    import sys
    import time
-   sys.path.append("./iilvd_interface/python")
+   sys.path.append("./iilvd_interface/python") # <- you're likely going to need to change that string
+                                               # make it the path to the `iilvd_interface` folder whereever
+                                               # that folder might be
    ```
    Then you want to import the actual tools<br><br>
    ```python
