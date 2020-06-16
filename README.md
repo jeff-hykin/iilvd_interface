@@ -30,7 +30,7 @@ Open up a terminal/CMD/console to that project. e.g. `cd YourProjectFolder`<br>
 Then run `git submodule add https://github.com/jeff-hykin/iilvd_interface`.<br>
 This will add a `iilvd_interface` folder to your project.
 2. Importing the code<br>
-Presumably you have a python file, lets say `yourCode.py`. There's a full example of how to import the code here: [python/example.py](https://github.com/jeff-hykin/iilvd_interface/blob/51b78bad14b93b6b2801d36a6a5890d5fdaeb08b/python/example.py#L4) To import the code you'll need to add that folder (iilvd_interface) to your Python path.<br><br>
+Presumably you have a python file, lets say `yourCode.py`. <br> There's a full example of how to import the code here: [python/example.py](https://github.com/jeff-hykin/iilvd_interface/blob/51b78bad14b93b6b2801d36a6a5890d5fdaeb08b/python/example.py#L4)<br>To import the code you'll need to add that folder (iilvd_interface) to your Python path.<br><br>
    ```python
    import sys
    import time
@@ -59,7 +59,7 @@ There is also the `has_related_videos` filter, and `is_downloaded` filter. (Ther
 <br><br><br>
 ### Data about a video
 
-Take a look at the [data_format.yaml](https://github.com/jeff-hykin/iilvd_interface/blob/51b78bad14b93b6b2801d36a6a5890d5fdaeb08b/data_format.yaml#L4) which describes all of the avalible fields for videos and what the exact names of the fields are. Note that most of the fields are optional, so there will need to be code checking to make sure they exist.
+There's a lot of data you get get about a video. I'll go over the basics here, but if you want to see every possible option take a look at the [data_format.yaml](https://github.com/jeff-hykin/iilvd_interface/blob/51b78bad14b93b6b2801d36a6a5890d5fdaeb08b/data_format.yaml#L4). Note! most of the fields are <b>optional</b>, so your code will need to check to make sure they exist.
 
 ```
 # get a video
@@ -72,14 +72,14 @@ video_object.frames  # a generator returning each frame as a cv2 img
 video_object.data    # all of the metadata as a dict()
 video_object.path    # path to .mp4 file IF the video is downloaded
 
-# Video database retrival (from data_format.yaml)
+# Video database retrival (directly from data_format.yaml)
 video_object["basic_info", "duration"] # makes a network request for only the duration
-video_object["related_videos", 0] # makes a requst for only the related
+video_object["related_videos", 0] # makes a requst for only related videos (returns a list of id's)
 ```
 <br><br><br>
-### Efficient Data Access
+### Advanced Data Access
 
-The database uses MongoDB on the backend, so you can use the [MongoDB find-queries](https://docs.mongodb.com/manual/reference/operator/query/) directly as follows:
+The database uses MongoDB on the backend. If you want to make your own efficient custom queries you can use the [MongoDB find-queries](https://docs.mongodb.com/manual/reference/operator/query/) directly as follows:
 ```
 # get a list of id's to all the videos shorter than 5 minutes
 video_ids = DB.find({ "basic_info.duration": { "$lt" : 5 * 60 } })
