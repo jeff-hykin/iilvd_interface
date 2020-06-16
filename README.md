@@ -11,10 +11,35 @@
 
 <br><br>
 
-# Python: How to use
+# How to use
 
 ## 1. Installation
-Install all the needed pip modules. Check the [requirements.txt](https://github.com/jeff-hykin/iilvd_interface/blob/51b78bad14b93b6b2801d36a6a5890d5fdaeb08b/requirements.txt#L20) file to see all of those and their versions.
+You'll need
+- python3 (≥3.6)
+- pip3
+- youtube-dl
+- ffmpeg
+
+And you'll need all the pip modules mentioned in [requirements.txt](https://github.com/jeff-hykin/iilvd_interface/blob/51b78bad14b93b6b2801d36a6a5890d5fdaeb08b/requirements.txt#L20) 
+
+### For MacOS this just means run
+```
+/bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install.sh)"
+brew install git
+brew install python3
+brew install youtube-dl
+brew install ffmpeg
+pip3 install $(curl https://raw.githubusercontent.com/jeff-hykin/iilvd_interface/51b78bad14b93b6b2801d36a6a5890d5fdaeb08b/requirements.txt) 
+```
+### For Windows 10
+I recommend installing all of them with [Scoop](https://scoop.sh/) or [Chocolatey](https://chocolatey.org/install)<br>but here's some guides encase you don't want to<br>
+[git install guide](https://git-scm.com/book/en/v2/Getting-Started-Installing-Git)<br>
+[python3 guide](https://www.digitalocean.com/community/tutorials/how-to-install-python-3-and-set-up-a-local-programming-environment-on-windows-10)<br>
+[youtube-dl guide](http://ytdl-org.github.io/youtube-dl/download.html)<br>
+[ffmpeg guide](https://www.wikihow.com/Install-FFmpeg-on-Windows)<br>
+
+### For Linux
+Seeing as you are a superior programmer, you've probably installed all those before even reading this sentence. For completeness sake though, basically repeat the MacOS commands, but replace `brew install` with your package manager (probably `apt-get install`)
 
 ## 2. Connection
 Make sure you're connected to the TAMU VPN, you'll get a connection error otherwise
@@ -22,7 +47,7 @@ Make sure you're connected to the TAMU VPN, you'll get a connection error otherw
 ## 3. Your project
 - Presumably you have a project of your own in a folder somewhere
 - And presumably you are using git to manage your project
-- (If you don't, then please make a git repository for your project) 
+- (If you don't, then please [make a git repository](https://thegeeksalive.com/how-to-create-a-new-git-repository-and-push-it-to-github/) for your project) 
 
 We need to download the code to your project, import it, and then use it
 1. Download <br>
