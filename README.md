@@ -14,6 +14,8 @@
 # How to use
 
 ## 1. Installation
+<details>
+  <summary>Click For Installtion Details</summary>
 You'll need
 - python3 (≥3.6)
 - pip3
@@ -40,6 +42,8 @@ I recommend installing all of them with [Scoop](https://scoop.sh/) or [Chocolate
 
 ### For Linux
 Seeing as you are a superior programmer, you've probably installed all those before even reading this sentence. For completeness sake though, basically repeat the MacOS commands, but replace `brew install` with your package manager (probably `apt-get install`)
+</details>
+
 
 ## 2. Connection
 Make sure you're connected to the TAMU VPN, you'll get a connection error otherwise
