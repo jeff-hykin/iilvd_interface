@@ -17,6 +17,7 @@
 <details>
   <summary>Click For Installation Details</summary>
 You'll need
+  
 - python3 (≥3.6)
 - pip3
 - youtube-dl
