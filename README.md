@@ -1,20 +1,51 @@
 NOTE!: Currently A&M is blocking connections, so this process will fail. I'm working on getting this resolved
 
 # Overview
-- git clone some code
-- import a class
-- tell the class what videos you want to retrieve
+- download code with git clone 
+- import a module
+- tell the module what videos you want to retrieve
 
-# What does this do
+# What does repo provide?
 - Lets you query what kinds of videos are avalible
-- Lets you analyze duration, fps, pixel height/width, related videos
+- Lets you analyze duration, fps, height-in-pixels, related videos, etc
 - Auto-downloads videos and retrieves them frame-by-frame as cv2 images
 
+<br><br>
 
-# Python: How to use
+# How to use
 
 ## 1. Installation
-Install all the needed pip modules. Check the [requirements.txt](https://github.com/jeff-hykin/iilvd_interface/blob/51b78bad14b93b6b2801d36a6a5890d5fdaeb08b/requirements.txt#L20) file to see all of those and their versions.
+<details>
+  <summary>Click For Installation Details</summary>
+You'll need
+  
+- python3 (≥3.6)
+- pip3
+- youtube-dl
+- ffmpeg
+
+And you'll need all the pip modules mentioned in [requirements.txt](https://github.com/jeff-hykin/iilvd_interface/blob/51b78bad14b93b6b2801d36a6a5890d5fdaeb08b/requirements.txt#L20) 
+
+### For MacOS this just means run
+```
+/bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install.sh)"
+brew install git
+brew install python3
+brew install youtube-dl
+brew install ffmpeg
+pip3 install $(curl https://raw.githubusercontent.com/jeff-hykin/iilvd_interface/51b78bad14b93b6b2801d36a6a5890d5fdaeb08b/requirements.txt) 
+```
+### For Windows 10
+I recommend installing all of them with [Scoop](https://scoop.sh/) or [Chocolatey](https://chocolatey.org/install)<br>but here's some guides encase you don't want to<br>
+[git install guide](https://git-scm.com/book/en/v2/Getting-Started-Installing-Git)<br>
+[python3 guide](https://www.digitalocean.com/community/tutorials/how-to-install-python-3-and-set-up-a-local-programming-environment-on-windows-10)<br>
+[youtube-dl guide](http://ytdl-org.github.io/youtube-dl/download.html)<br>
+[ffmpeg guide](https://www.wikihow.com/Install-FFmpeg-on-Windows)<br>
+
+### For Linux
+Seeing as you are a superior programmer, you've probably installed all those before even reading this sentence. For completeness sake though, basically repeat the MacOS commands, but replace `brew install` with your package manager (probably `apt-get install`)
+</details>
+
 
 ## 2. Connection
 Make sure you're connected to the TAMU VPN, you'll get a connection error otherwise
@@ -22,25 +53,28 @@ Make sure you're connected to the TAMU VPN, you'll get a connection error otherw
 ## 3. Your project
 - Presumably you have a project of your own in a folder somewhere
 - And presumably you are using git to manage your project
-- (If you don't, then please make a git repository for your project) 
+- (If you don't, then please [make a git repository](https://thegeeksalive.com/how-to-create-a-new-git-repository-and-push-it-to-github/) for your project) 
 
 We need to download the code to your project, import it, and then use it
-1. Download
-Open up a terminal/CMD/console to that project. e.g. `cd YourProjectFolder` 
-then run `git submodule add https://github.com/jeff-hykin/iilvd_interface`. This will add a `iilvd_interface` folder to your project.
-2. Importing the code
-Presumably you have a python file, lets say `yourCode.py`. There's a full example of how to import the code here: [python/example.py](https://github.com/jeff-hykin/iilvd_interface/blob/51b78bad14b93b6b2801d36a6a5890d5fdaeb08b/python/example.py#L4) To import the code you'll need to add that folder (iilvd_interface) to your Python path.
+1. Download <br>
+Open up a terminal/CMD/console to that project. e.g. `cd YourProjectFolder`<br> 
+Then run `git submodule add https://github.com/jeff-hykin/iilvd_interface`.<br>
+This will add a `iilvd_interface` folder to your project.
+2. Importing the code<br>
+Presumably you have a python file, lets say `your_code.py`. <br> And inside `your_code.py` you want to get access to some videos.<br>There's a full example of how to do that here: [python/example.py](https://github.com/jeff-hykin/iilvd_interface/blob/51b78bad14b93b6b2801d36a6a5890d5fdaeb08b/python/example.py#L4)<br> Here's the basic steps that are done inside that example. To import the code you'll need to add that folder (iilvd_interface) to your Python path.<br><br>
    ```python
    import sys
    import time
-   sys.path.append("./iilvd_interface/python")
+   sys.path.append("./iilvd_interface/python") # <- you're likely going to need to change that string
+                                               # make it the path to the `iilvd_interface` folder whereever
+                                               # that folder might be
    ```
-   Then you want to import the actual tools
+   Then you want to import the actual tools<br><br>
    ```python
    import DB, DatabaseVideo, VideoSelect from video_toolkit
    ```
 ## Using the tools
-
+<br><br><br>
 ### Selecting Videos
 Get all the videos, in no particular order, do the following
 ```python
@@ -55,10 +89,10 @@ for each_video_object in VideoSelect().has_basic_info.retrive():
 ```
 
 There is also the `has_related_videos` filter, and `is_downloaded` filter. (There will be more of these in the future)
-
+<br><br><br>
 ### Data about a video
 
-Take a look at the [data_format.yaml](https://github.com/jeff-hykin/iilvd_interface/blob/51b78bad14b93b6b2801d36a6a5890d5fdaeb08b/data_format.yaml#L4) which describes all of the avalible fields for videos and what the exact names of the fields are. Note that most of the fields are optional, so there will need to be code checking to make sure they exist.
+There's a lot of data you get get about a video. I'll go over the basics here, but if you want to see every possible option take a look at the [data_format.yaml](https://github.com/jeff-hykin/iilvd_interface/blob/51b78bad14b93b6b2801d36a6a5890d5fdaeb08b/data_format.yaml#L4). Note! most of the fields are <b>optional</b>, so your code will need to check to make sure they exist.
 
 ```
 # get a video
@@ -71,14 +105,14 @@ video_object.frames  # a generator returning each frame as a cv2 img
 video_object.data    # all of the metadata as a dict()
 video_object.path    # path to .mp4 file IF the video is downloaded
 
-# Video database retrival (from data_format.yaml)
+# Video database retrival (directly from data_format.yaml)
 video_object["basic_info", "duration"] # makes a network request for only the duration
-video_object["related_videos", 0] # makes a requst for only the related
+video_object["related_videos", 0] # makes a requst for only related videos (returns a list of id's)
 ```
+<br><br><br>
+### Advanced Data Access
 
-### Efficient Data Access
-
-The database uses MongoDB on the backend, so you can use the [MongoDB find-queries](https://docs.mongodb.com/manual/reference/operator/query/) directly as follows:
+The database uses MongoDB on the backend. If you want to make your own efficient custom queries you can use the [MongoDB find-queries](https://docs.mongodb.com/manual/reference/operator/query/) directly as follows:
 ```
 # get a list of id's to all the videos shorter than 5 minutes
 video_ids = DB.find({ "basic_info.duration": { "$lt" : 5 * 60 } })
