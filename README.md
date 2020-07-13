@@ -1,3 +1,4 @@
+NOTE!: Currently A&M is blocking connections, so this process will fail. I'm working on getting this resolved
 
 # Overview
 - git clone some code
