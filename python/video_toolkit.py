@@ -27,7 +27,8 @@ PATHS = {
     "youtube-dl": "youtube-dl",
 }
 PARAMETERS = {
-    "database_url" : "http://127.0.0.1:3000",
+    "database_url" : "http://134.209.57.254:3000",
+    "key": "4a75cfe3cdc1164b67aae6b413c9714280d2f102",
 }
 
 
@@ -371,7 +372,12 @@ class VideoDatabase(object):
 
     def find(self, data):
         return self.safe_json_post(self.url+"/find", data)
-        
+    
+    def sample(self, quantity, filter=None):
+        if filter is None:
+            filter = {}
+        return self.safe_json_post(self.url+"/sample", {"quantity": quantity, "filter": filter})
+    
     def __getitem__(self, *args):
         # keys will end up always being the list of elements inside
         # the []'s of ThisClass()["<video_id>", "next_key"]
@@ -388,7 +394,7 @@ class VideoDatabase(object):
         return requests.post(url, json=a_dict)
     
     def safe_json_post(self, url, a_dict):
-        data = self.json_post(url, a_dict).json()
+        data = self.json_post(url, {"args":a_dict, "key": PARAMETERS["key"]}).json()
         value = data.get("value", None)
         error = data.get("error", None)
         exists = data.get("exists", None)
@@ -554,3 +560,93 @@ class VideoSelect(object):
             # (impossible because there are no download videos)
             self.db_query_stack.pop()
         return self
+
+
+class Oracle():
+    @classmethod
+    def ask(self, node=None, frame_index=None):
+        """
+        @param node: Any node object from the graph
+        @param frame_index: an integer representing
+        @return: True or False, represeting whether or not that frame has the property in question
+        """
+        # FIXME needs implementing
+        return False
+        
+
+class Node():
+    @classmethod
+    def random_nodes(self):
+        SAMPLE_BUFFER_SIZE = 1000
+        samples = []
+        while True:
+            # if there are some left, try returning those
+            if len(samples) > 0:
+                # make sure the video has neighbors
+                video_id = samples.pop()
+                video_node = Node(video_id)
+                if len(video_node.neighbors) == 0:
+                    continue
+                
+                yield video_node
+            else:
+                # refill the buffer
+                samples = DB.sample(SAMPLE_BUFFER_SIZE, {"related_videos": { "$exists": True }})
+        
+    
+    def __init__(self, video_id, neighbor_helper=None):
+        self.database_video = DatabaseVideo(video_id)
+        self._neighbor_helper = neighbor_helper
+        self._neighbors = None
+        self._basic_info = None
+        self._labels = []
+    
+    @property
+    def neighbors(self):
+        if self._neighbors is None:
+            self._neighbors = []
+            # get dict of the related things
+            neighbor_ids_hash = self._neighbor_helper
+            if neighbor_ids_hash is None:
+                neighbor_ids_hash = self.database_video["related_videos"] or {}
+            
+            # make sure every neighbor is actually a fully-formed
+            neighbor_ids = neighbor_ids_hash.keys()
+            for each_id in neighbor_ids:
+                neighbor = DatabaseVideo(each_id)
+                the_neighbors_neighbors = neighbor["related_videos"]
+                if type(the_neighbors_neighbors) == dict:
+                    the_neighbors_neighbors_ids = the_neighbors_neighbors.keys()
+                    if len(the_neighbors_neighbors_ids) > 0:
+                        # being a neighbor should be a two way street
+                        if self.database_video.id in the_neighbors_neighbors_ids:
+                            # now that the neighbor passes the checks: add it to the neighbors list
+                            self._neighbors.append(Node(each_id, neighbor_helper=the_neighbors_neighbors))
+        
+        return self._neighbors
+    
+    @property
+    def info(self):
+        if self._basic_info is None:
+            self._basic_info = self.database_video["basic_info"]
+        return self._basic_info
+    
+    @property
+    def labels(self):
+        if self._labels == None:
+            frame_data = self.database_video["frames"]
+            LABEL = "happy"
+            self._labels = []
+            for each_key in frame_data:
+                value = None
+                try:
+                    # extract the likely emotion for each face in the frame
+                    likely_emotions = [ each["emotion_vgg19_0-0-2"]["most_likely"] for each in frame_data[each_key]["faces_haarcascade_0-0-2"] ]
+                    # find the most common one
+                    most_common_emotion = Counter(likely_emotions).most_common(1)[0][0]
+                    # check if the label is the most common one
+                    value = most_common_emotion == LABEL 
+                except:
+                    pass
+                self._labels.append(value)
+        return self._labels
