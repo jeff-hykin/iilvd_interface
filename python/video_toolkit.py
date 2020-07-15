@@ -373,6 +373,9 @@ class VideoDatabase(object):
     def find(self, data):
         return self.safe_json_post(self.url+"/find", data)
     
+    def grab(self, search_filter, return_filter):
+        return self.safe_json_post(self.url+"/grab", {"searchFilter": search_filter, "returnFilter": return_filter})
+    
     def sample(self, quantity, filter=None):
         if filter is None:
             filter = {}
@@ -591,7 +594,14 @@ class Node():
                 yield video_node
             else:
                 # refill the buffer
-                samples = DB.sample(SAMPLE_BUFFER_SIZE, {"related_videos": { "$exists": True }})
+                samples = DB.sample(
+                    SAMPLE_BUFFER_SIZE,
+                    {
+                        "related_videos": { "$exists": True },
+                        "basic_info": { "$exists": True },
+                        # "frames.0": { "$exists": True }, FIXME: enable this before final release
+                    }
+                )
         
     
     def __init__(self, video_id, neighbor_helper=None):
@@ -611,10 +621,10 @@ class Node():
                 neighbor_ids_hash = self.database_video["related_videos"] or {}
             
             # make sure every neighbor is actually a fully-formed
-            neighbor_ids = neighbor_ids_hash.keys()
-            for each_id in neighbor_ids:
-                neighbor = DatabaseVideo(each_id)
-                the_neighbors_neighbors = neighbor["related_videos"]
+            neighbors_dict = DB.grab({ "_id": {"$in": list(neighbor_ids_hash.keys()) } }, { "related_videos": 1 })
+            
+            for each_id in neighbors_dict:
+                the_neighbors_neighbors = neighbors_dict[each_id]["related_videos"]
                 if type(the_neighbors_neighbors) == dict:
                     the_neighbors_neighbors_ids = the_neighbors_neighbors.keys()
                     if len(the_neighbors_neighbors_ids) > 0:
