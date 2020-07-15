@@ -1,7 +1,7 @@
 import sys
 import time
 sys.path.append("./iilvd_interface/python")
-import DB, DatabaseVideo, VideoSelect from video_toolkit
+from video_toolkit import DB, DatabaseVideo, VideoSelect, Node
 
 # a generator that returns all videos that are related to some other video
 for each_video in VideoSelect().has_related_videos.retrive():
