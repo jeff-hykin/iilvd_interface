@@ -71,7 +71,7 @@ Presumably you have a python file, lets say `your_code.py`. <br> And inside `you
    ```
    Then you want to import the actual tools<br><br>
    ```python
-   import DB, DatabaseVideo, VideoSelect from video_toolkit
+   from video_toolkit import DB, DatabaseVideo, VideoSelect, Node
    ```
 ## Using the tools
 <br><br><br>
