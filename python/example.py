@@ -15,7 +15,8 @@ from video_toolkit import DB, Oracle, Node, DatabaseVideo, VideoSelect
     # Oracle.ask(node=a_node, index=1)
     # Oracle.question_count
 
-# a generator that returns randomly sampled nodes (that are guarenteed to have neighbors) 
+# a generator that returns randomly sampled nodes
+# (these nodes are guarenteed to have neighbors and labels)
 for each_node in Node.random_nodes():
     
     # check a particular label by asking the oracle
@@ -26,8 +27,8 @@ for each_node in Node.random_nodes():
     #      None = index out of bounds/no label info
     
     # returns a list of neighboring nodes
-    # all of these neighbors will exist in the database
-    # (but not all the neighbors will have labels)
+    # BUT! the neighbors are not guarenteed to have labels
+    # (they might be unlabeled)
     print(each_node.neighbors)
     
     # basic_info
