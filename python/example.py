@@ -45,7 +45,7 @@ for each_node in Node.random_nodes():
     # (kind of a debugging tool, and a way to get around asking the Oracle)
     print('each_node.all_labels = ', each_node.all_labels)
     
-    # this is just an example so end after one iteration
+    # this is just an example: so end it after one iteration
     break
 
 #
@@ -58,7 +58,6 @@ for each_node in Node.random_nodes():
     # each_video.path    # returns None if video hasn't been downloaded
 
 # a generator that returns all videos that are related to some other video
-
 for each_video in VideoSelect().has_related_videos.retrive():
     # video object
     print('each video: ', each_video)
