@@ -12,9 +12,9 @@ from video_toolkit import DB, Oracle, Node, DatabaseVideo, VideoSelect, PARAMETE
 # simple access to nodes
 #
     # Node.random_nodes()
-    # node.has_labels
-    # node.neighbors
-    # node.info
+    # node.has_labels        # returns True/False
+    # node.neighbors         # lists all neighboring nodes
+    # node.info              # info about the video
     # Oracle.ask(node=a_node, index=1)
     # Oracle.question_count
 
