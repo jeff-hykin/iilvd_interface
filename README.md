@@ -11,6 +11,7 @@
 - Auto-downloads videos and retrieves them frame-by-frame as cv2 images
 
 
+# Problems / Errors
 If you have any challenges getting it setup, or if the code is broken, [create an issue on GitHub](https://github.com/jeff-hykin/iilvd_interface/issues)
 
 <br><br>
@@ -55,7 +56,7 @@ Make sure you're connected to the TAMU VPN, you'll get a connection error otherw
 
 ## 3. Your project
 
-If you know what you're doing, you can read this and probably skip parts or do them your own way
+(FYI: If you know what you're doing, you can probably skip parts or do them your own way)
 
 - Presumably you have a project of your own in a folder somewhere
 - And presumably you are using git to manage your project
@@ -80,9 +81,13 @@ Presumably you have a python file, lets say `your_code.py`. <br> And inside `you
    from video_toolkit import DB, DatabaseVideo, VideoSelect, Node
    ```
 ## Using the tools
-<br><br><br>
+<br>
 
-See [the example file here](https://github.com/jeff-hykin/iilvd_interface/blob/236a3b4518fa1ea4230d9fa5c0f1ab5922660f6f/python/example.py)
+See [the example file here](https://github.com/jeff-hykin/iilvd_interface/blob/236a3b4518fa1ea4230d9fa5c0f1ab5922660f6f/python/example.py) for a jumpstart into all the tools. That file should 
+
+<br><br>
+
+
 
 
 ### Selecting Videos
