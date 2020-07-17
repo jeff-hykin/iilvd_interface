@@ -27,10 +27,15 @@ PATHS = {
     "youtube-dl": "youtube-dl",
 }
 PARAMETERS = {
-    "database_url" : "http://134.209.57.254:3000",
+    "log": False,
+    "database_url" : "http://134.209.57.254:3000", # backup server (just comment out the tamu server on next line)
+    "database_url" : "http://paradise.cs.tamu.edu:3000",
     "key": "4a75cfe3cdc1164b67aae6b413c9714280d2f102",
 }
 
+def log(*args, **kwargs):
+    if PARAMETERS["log"]:
+        print(*args, **kwargs) 
 
 # 
 # simple helpers
@@ -565,43 +570,102 @@ class VideoSelect(object):
         return self
 
 
-class Oracle():
-    @classmethod
-    def ask(self, node=None, frame_index=None):
+class OracleClass():
+    def __init__(self, ):
+        self.oracle_question_count = 0
+    
+    @property
+    def question_count():
+        return self.oracle_question_count
+    
+    def ask(self, node=None, index=None):
         """
         @param node: Any node object from the graph
-        @param frame_index: an integer representing
-        @return: True or False, represeting whether or not that frame has the property in question
+        @param index: an integer representing which frame
+        @return: True or False, represeting whether or not that frame has the property in question (currently checks for happy expression)
         """
-        # FIXME needs implementing
-        return False
+        from collections import Counter
         
+        # keep track of how many times the Oracle was asked
+        self.oracle_question_count += 1
+        
+        # one of the 9 tracked expressions, base boolean values off of that
+        LABEL = "happy"
+        
+        # ensure node labels exist
+        log(f"log: ")
+        log(f"log: Oracle.ask()")
+        if node._boolean_labels == None:
+            log(f"log: node labels don't exist, retriving from database")
+            frame_data = node.database_video["frames"]
+            log(f"log: node labels retrived, processing frames now")
+            node._boolean_labels = []
+            for each_key in frame_data:
+                value = None
+                try:
+                    # extract the likely emotion for each face in the frame
+                    likely_emotions = [ each["emotion_vgg19_0-0-2"]["most_likely"] for each in frame_data[each_key]["faces_haarcascade_0-0-2"] ]
+                    # find the most common one
+                    most_common_emotion = Counter(likely_emotions).most_common(1)[0][0] if len(likely_emotions) > 0 else None
+                    # check if the label is the most common one
+                    value = most_common_emotion == LABEL 
+                except Exception as error:
+                    pass
+                
+                node._boolean_labels.append(value)
+            
+            log(f"log: node labels processed")
+        
+        # check the value
+        if index in node._boolean_labels:
+            log(f"log: END: Oracle.ask()")
+            return node._boolean_labels[frame_index]
+        else:
+            log(f"log: frame_index out of bounds")
+            log(f"log: END: Oracle.ask()")
+            return None
+
+Oracle = OracleClass()
 
 class Node():
     @classmethod
     def random_nodes(self):
+        """
+        a generator of nodes, each drawn randomly from the database
+        """
         SAMPLE_BUFFER_SIZE = 1000
         samples = []
+        log('log: ')
+        log('log: random_nodes()')
         while True:
             # if there are some left, try returning those
             if len(samples) > 0:
                 # make sure the video has neighbors
+                log('log:     ensuring node has neighbors')
                 video_id = samples.pop()
                 video_node = Node(video_id)
                 if len(video_node.neighbors) == 0:
                     continue
                 
+                log('log: END random_nodes()')
                 yield video_node
             else:
                 # refill the buffer
+                log('log: filling up buffer for random_nodes')
                 samples = DB.sample(
                     SAMPLE_BUFFER_SIZE,
                     {
                         "related_videos": { "$exists": True },
                         "basic_info": { "$exists": True },
-                        # "frames.0": { "$exists": True }, FIXME: enable this before final release
+                        "frames.0": { "$exists": True },
                     }
                 )
+                log('log: buffer filled')
+                
+                # sanity check
+                if len(samples) == 0:
+                    print('log: len(samples) == 0 AFTER retriving from the database, something is broken')
+                    break
         
     
     def __init__(self, video_id, neighbor_helper=None):
@@ -609,10 +673,14 @@ class Node():
         self._neighbor_helper = neighbor_helper
         self._neighbors = None
         self._basic_info = None
-        self._labels = []
+        self._boolean_labels = None
+        self._labels = None
     
     @property
     def neighbors(self):
+        """
+        a list of related nodes
+        """
         if self._neighbors is None:
             self._neighbors = []
             # get dict of the related things
@@ -621,7 +689,9 @@ class Node():
                 neighbor_ids_hash = self.database_video["related_videos"] or {}
             
             # make sure every neighbor is actually a fully-formed
+            log(f'log:     grabing all neighbors of "{self.database_video.id}"')
             neighbors_dict = DB.grab({ "_id": {"$in": list(neighbor_ids_hash.keys()) } }, { "related_videos": 1 })
+            log(f'log:     neighbors were grabbed for "{self.database_video.id}"')
             
             for each_id in neighbors_dict:
                 the_neighbors_neighbors = neighbors_dict[each_id]["related_videos"]
@@ -638,25 +708,14 @@ class Node():
     @property
     def info(self):
         if self._basic_info is None:
+            log(f'log: requesting basic_info from database for {self.database_video.id}')
             self._basic_info = self.database_video["basic_info"]
+            log(f'log: basic_info response received for {self.database_video.id}')
         return self._basic_info
     
     @property
-    def labels(self):
+    def all_labels(self):
         if self._labels == None:
             frame_data = self.database_video["frames"]
-            LABEL = "happy"
-            self._labels = []
-            for each_key in frame_data:
-                value = None
-                try:
-                    # extract the likely emotion for each face in the frame
-                    likely_emotions = [ each["emotion_vgg19_0-0-2"]["most_likely"] for each in frame_data[each_key]["faces_haarcascade_0-0-2"] ]
-                    # find the most common one
-                    most_common_emotion = Counter(likely_emotions).most_common(1)[0][0]
-                    # check if the label is the most common one
-                    value = most_common_emotion == LABEL 
-                except:
-                    pass
-                self._labels.append(value)
+            self._labels = [[ each["emotion_vgg19_0-0-2"]["most_likely"] for each in frame_data[each_key]["faces_haarcascade_0-0-2"] ] for each_key in frame_data]
         return self._labels
