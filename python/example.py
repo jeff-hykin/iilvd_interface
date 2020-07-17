@@ -41,6 +41,9 @@ for each_node in Node.random_nodes():
     # basic_info
     print('each_node.info = ', each_node.info)
     
+    # basic_info
+    print('each_node.has_labels = ', each_node.has_labels)
+    
     # access to video-object (see the next for loop for more info)
     print('each_node.database_video = ', each_node.database_video)
     
