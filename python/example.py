@@ -1,6 +1,5 @@
 
 import sys
-import time
 sys.path.append("./iilvd_interface/python") # <- you're likely going to need to change that string
                                             # make it the path to your `iilvd_interface/python` folder
 
