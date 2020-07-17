@@ -3,7 +3,10 @@ import sys
 sys.path.append("./iilvd_interface/python") # <- you're likely going to need to change that string
                                             # make it the path to your `iilvd_interface/python` folder
 
-from video_toolkit import DB, Oracle, Node, DatabaseVideo, VideoSelect
+from video_toolkit import DB, Oracle, Node, DatabaseVideo, VideoSelect, PARAMETERS
+
+# uncomment the next line if you want really verbose logging of what is happening in the background
+# PARAMETERS["log"] = True
 
 #
 # simple access to nodes
