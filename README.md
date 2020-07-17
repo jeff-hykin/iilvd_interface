@@ -11,6 +11,7 @@
 - Auto-downloads videos and retrieves them frame-by-frame as cv2 images
 
 
+# Problems / Errors
 If you have any challenges getting it setup, or if the code is broken, [create an issue on GitHub](https://github.com/jeff-hykin/iilvd_interface/issues)
 
 <br><br>
@@ -24,10 +25,10 @@ You'll need
   
 - python3 (≥3.6)
 - pip3
+- the pip modules mentioned in [requirements.txt](https://github.com/jeff-hykin/iilvd_interface/blob/51b78bad14b93b6b2801d36a6a5890d5fdaeb08b/requirements.txt#L20) 
 - youtube-dl
 - ffmpeg (optional, only needed for a_video.save_frame)
-
-You'll also need the pip modules mentioned in [requirements.txt](https://github.com/jeff-hykin/iilvd_interface/blob/51b78bad14b93b6b2801d36a6a5890d5fdaeb08b/requirements.txt#L20) 
+- git (for setup only)
 
 ### For MacOS this just means run
 ```
@@ -55,7 +56,7 @@ Make sure you're connected to the TAMU VPN, you'll get a connection error otherw
 
 ## 3. Your project
 
-If you know what you're doing, you can read this and probably skip parts or do them your own way
+(FYI: If you know what you're doing, you can probably skip parts or do them your own way)
 
 - Presumably you have a project of your own in a folder somewhere
 - And presumably you are using git to manage your project
@@ -65,24 +66,29 @@ We need to download the code to your project, import it, and then use it
 1. Download <br>
 Open up a terminal/CMD/console to that project. e.g. `cd YourProjectFolder`<br> 
 Then run `git submodule add https://github.com/jeff-hykin/iilvd_interface`.<br>
-This will add a `iilvd_interface` folder to your project.
+This will add a `iilvd_interface` folder to your project.<br><br>
+(This will also let you easily pull updates to this library with `cd iilvd_interface` and `git pull`)
 2. Importing the code<br>
 Presumably you have a python file, lets say `your_code.py`. <br> And inside `your_code.py` you want to get access to some videos.<br>There's a full example of how to do that here: [python/example.py](https://github.com/jeff-hykin/iilvd_interface/blob/51b78bad14b93b6b2801d36a6a5890d5fdaeb08b/python/example.py#L4)<br> Here's the basic steps that are done inside that example. To import the code you'll need to add that folder (iilvd_interface) to your Python path.<br><br>
    ```python
    import sys
    import time
-   sys.path.append("./iilvd_interface/python") # <- you're likely going to need to change that string
-                                               # make it the path to the `iilvd_interface` folder whereever
-                                               # that folder might be
+   sys.path.append("./iilvd_interface/python") # <- if your_code.py (this file) is in your own folder
+                                               # then you're going to need to change that string to be 
+                                               # wherever your `iilvd_interface/python` folder is
    ```
    Then you want to import the actual tools<br><br>
    ```python
-   from video_toolkit import DB, DatabaseVideo, VideoSelect, Node
+   from video_toolkit import DB, Oracle, Node, DatabaseVideo, VideoSelect
    ```
 ## Using the tools
-<br><br><br>
+<br>
 
-See [the example file here](https://github.com/jeff-hykin/iilvd_interface/blob/236a3b4518fa1ea4230d9fa5c0f1ab5922660f6f/python/example.py)
+See [the example file here](https://github.com/jeff-hykin/iilvd_interface/blob/236a3b4518fa1ea4230d9fa5c0f1ab5922660f6f/python/example.py) for a jumpstart into all the tools.
+
+<br><br>
+
+
 
 
 ### Selecting Videos
