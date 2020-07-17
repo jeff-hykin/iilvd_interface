@@ -27,6 +27,7 @@ You'll need
 - pip3
 - youtube-dl
 - ffmpeg (optional, only needed for a_video.save_frame)
+- git (for setup only)
 
 You'll also need the pip modules mentioned in [requirements.txt](https://github.com/jeff-hykin/iilvd_interface/blob/51b78bad14b93b6b2801d36a6a5890d5fdaeb08b/requirements.txt#L20) 
 
