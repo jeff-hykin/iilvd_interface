@@ -20,23 +20,27 @@ for each_node in Node.random_nodes():
     
     # check a particular label by asking the oracle
     print('Oracle.ask(each_node, 1) = ', Oracle.ask(each_node, index=1))
-    # True = has label
-    # False = doesn't have the label
-    # None = index out of bounds 
+    # returns one of:
+    #      True = has the label
+    #      False = doesn't have the label
+    #      None = index out of bounds
     
-    # returns a list of neighboring nodes 
+    # returns a list of neighboring nodes
+    # all of these neighbors will exist in the database
+    # (but not all the neighbors will have labels)
     print(each_node.neighbors)
     
     # basic_info
     print(each_node.info)
     
-    # access to video-object (see next for loop)
+    # access to video-object (see the next for loop for more info)
     print(each_node.database_video)
     
-    # a way to better understand the data
+    # a way to better understand the labels
     # (kind of a debugging tool, and a way to get around asking the Oracle)
     print(each_node.all_labels)
     
+    # this is just an example so end after one iteration
     break
 
 #
@@ -49,17 +53,20 @@ for each_node in Node.random_nodes():
     # each_video.path    # returns None if video hasn't been downloaded
 
 # a generator that returns all videos that are related to some other video
+
 for each_video in VideoSelect().has_related_videos.retrive():
     # video object
     print('each video: ', each_video)
     
     print('each_video.id = ', each_video.id)
-    # "special" attributes
     
-    # the raw data straight from the database (can be a lot of data becase of thousands of frames)
+    # the raw data straight from the database
+    # (can sometimes be a lot of data becase of thousands of frames)
     print('each_video.data  = ', each_video.data)
     
     # makes a network call for "related_videos"
+    # note: some neighbors here might have an edge with no node
+    # (the neighbor might not be in the database)
     ids_of_related_videos = each_video["related_videos"].keys()
     
     # setup all related videos (no network calls, just adding a wrapper-class)
@@ -68,7 +75,7 @@ for each_video in VideoSelect().has_related_videos.retrive():
     # makes a network call of ONLY the basic info of the related video
     print('related_videos[0]["basic_info"] = ', related_videos[0]["basic_info"])
     
-    time.sleep(10)
+    # this is just an example so end after one iteration
     break
 
 

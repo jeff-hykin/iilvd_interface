@@ -599,6 +599,13 @@ class OracleClass():
             log(f"log: node labels don't exist, retriving from database")
             frame_data = node.database_video["frames"]
             log(f"log: node labels retrived, processing frames now")
+            
+            # make sure the frames exist
+            if frame_data is None:
+                log(f"log: this node {node.database_video.id} has no frames")
+                log(f"log: END: Oracle.ask()")
+                return None
+            
             node._boolean_labels = []
             for each_key in frame_data:
                 value = None
