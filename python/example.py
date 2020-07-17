@@ -10,6 +10,7 @@ from video_toolkit import DB, Oracle, Node, DatabaseVideo, VideoSelect
 # simple access to nodes
 #
     # Node.random_nodes()
+    # node.has_labels
     # node.neighbors
     # node.info
     # Oracle.ask(node=a_node, index=1)
@@ -33,17 +34,17 @@ for each_node in Node.random_nodes():
     # returns a list of neighboring nodes
     # BUT! the neighbors are Not guarenteed to have labels
     # (they might be unlabeled)
-    print(each_node.neighbors)
+    print('each_node.neighbors = ', each_node.neighbors)
     
     # basic_info
-    print(each_node.info)
+    print('each_node.info = ', each_node.info)
     
     # access to video-object (see the next for loop for more info)
-    print(each_node.database_video)
+    print('each_node.database_video = ', each_node.database_video)
     
     # a way to better understand the labels
     # (kind of a debugging tool, and a way to get around asking the Oracle)
-    print(each_node.all_labels)
+    print('each_node.all_labels = ', each_node.all_labels)
     
     # this is just an example so end after one iteration
     break

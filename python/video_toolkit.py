@@ -722,7 +722,29 @@ class Node():
     
     @property
     def all_labels(self):
+        """
+        @return: a list of lists of strings
+            for example: [
+                [],
+                [ "happy", "neutral" ],
+                [ "neutral" ],
+                [ "neutral" ],
+                [],
+                [],
+            ]
+        """
         if self._labels == None:
-            frame_data = self.database_video["frames"]
-            self._labels = [[ each["emotion_vgg19_0-0-2"]["most_likely"] for each in frame_data[each_key]["faces_haarcascade_0-0-2"] ] for each_key in frame_data]
+            if self.has_labels:
+                frame_data = self.database_video["frames"]
+                self._labels = [[ each["emotion_vgg19_0-0-2"]["most_likely"] for each in frame_data[each_key]["faces_haarcascade_0-0-2"] ] for each_key in frame_data]
+            else:
+                self._labels = []
         return self._labels
+    
+    
+    @property
+    def has_labels(self):
+        """
+        @return: boolean of whether or not the node has labels
+        """
+        return type(self.database_video["frames", 0]) == dict
