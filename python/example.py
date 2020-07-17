@@ -16,18 +16,22 @@ from video_toolkit import DB, Oracle, Node, DatabaseVideo, VideoSelect
     # Oracle.question_count
 
 # a generator that returns randomly sampled nodes
-# (these nodes are guarenteed to have neighbors and labels)
+# NOTE:
+#     - these nodes are guarenteed to have neighbors and labels
+#     - there are approximately 1200 fully labeled nodes
+#       But this for-loop will continue sampling indefinitely
+#       meaning you'll eventually start re-sampling nodes
 for each_node in Node.random_nodes():
     
-    # check a particular label by asking the oracle
+    # check a particular label at a particular index by asking the oracle
     print('Oracle.ask(each_node, 1) = ', Oracle.ask(each_node, index=1))
     # returns one of:
-    #      True = has the label
-    #      False = doesn't have the label
+    #      True = labeled as true
+    #      False = labeled as false
     #      None = index out of bounds/no label info
     
     # returns a list of neighboring nodes
-    # BUT! the neighbors are not guarenteed to have labels
+    # BUT! the neighbors are Not guarenteed to have labels
     # (they might be unlabeled)
     print(each_node.neighbors)
     
@@ -66,8 +70,8 @@ for each_video in VideoSelect().has_related_videos.retrive():
     print('each_video.data  = ', each_video.data)
     
     # makes a network call for "related_videos"
-    # note: some neighbors here might have an edge with no node
-    # (the neighbor might not be in the database)
+    # note: some neighbor-id's might not exist/have-data in the database
+    # (this is like a graph-edge with no node)
     ids_of_related_videos = each_video["related_videos"].keys()
     
     # setup all related videos (no network calls, just adding a wrapper-class)
