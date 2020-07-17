@@ -25,7 +25,7 @@ You'll need
   
 - python3 (≥3.6)
 - pip3
-- the pip modules mentioned in [requirements.txt](https://github.com/jeff-hykin/iilvd_interface/blob/51b78bad14b93b6b2801d36a6a5890d5fdaeb08b/requirements.txt#L20) 
+- the pip modules mentioned in [requirements.txt](https://github.com/jeff-hykin/iilvd_interface/blob/master/requirements.txt) 
 - youtube-dl
 - ffmpeg (optional, only needed for a_video.save_frame)
 - git (for setup only)
@@ -37,7 +37,7 @@ brew install git
 brew install python3
 brew install youtube-dl
 brew install ffmpeg
-pip3 install $(curl https://raw.githubusercontent.com/jeff-hykin/iilvd_interface/51b78bad14b93b6b2801d36a6a5890d5fdaeb08b/requirements.txt) 
+pip3 install $(curl https://raw.githubusercontent.com/jeff-hykin/iilvd_interface/master/requirements.txt) 
 ```
 ### For Windows 10
 I recommend installing all of them with [Scoop](https://scoop.sh/) or [Chocolatey](https://chocolatey.org/install)<br>but here's some guides encase you don't want to use those tools<br>
@@ -69,7 +69,7 @@ Then run `git submodule add https://github.com/jeff-hykin/iilvd_interface`.<br>
 This will add a `iilvd_interface` folder to your project.<br><br>
 (This will also let you easily pull updates to this library with `cd iilvd_interface` and `git pull`)
 2. Importing the code<br>
-Presumably you have a python file, lets say `your_code.py`. <br> And inside `your_code.py` you want to get access to some videos.<br>There's a full example of how to do that here: [python/example.py](https://github.com/jeff-hykin/iilvd_interface/blob/51b78bad14b93b6b2801d36a6a5890d5fdaeb08b/python/example.py#L4)<br> Here's the basic steps that are done inside that example. To import the code you'll need to add that folder (iilvd_interface) to your Python path.<br><br>
+Presumably you have a python file, lets say `your_code.py`. <br> And inside `your_code.py` you want to get access to some videos.<br>There's a full example of how to do that here: [python/example.py](https://github.com/jeff-hykin/iilvd_interface/blob/master/python/example.py)<br> Here's the basic steps that are done inside that example. To import the code you'll need to add that folder (iilvd_interface) to your Python path.<br><br>
    ```python
    import sys
    import time
@@ -84,7 +84,7 @@ Presumably you have a python file, lets say `your_code.py`. <br> And inside `you
 ## Using the tools
 <br>
 
-See [the example file here](https://github.com/jeff-hykin/iilvd_interface/blob/236a3b4518fa1ea4230d9fa5c0f1ab5922660f6f/python/example.py) for a jumpstart into all the tools.
+See [the example file here](https://github.com/jeff-hykin/iilvd_interface/blob/master/python/example.py) for a jumpstart into all the tools.
 
 <br><br>
 
@@ -108,7 +108,7 @@ There is also the `has_related_videos` filter, and `is_downloaded` filter. (Ther
 <br><br><br>
 ### Data about a video
 
-There's a lot of data you get get about a video. I'll go over the basics here, but if you want to see every possible option take a look at the [data_format.yaml](https://github.com/jeff-hykin/iilvd_interface/blob/51b78bad14b93b6b2801d36a6a5890d5fdaeb08b/data_format.yaml#L4). Note! most of the fields are <b>optional</b>, so your code will need to check to make sure they exist.
+There's a lot of data you get get about a video. I'll go over the basics here, but if you want to see every possible option take a look at the [data_format.yaml](https://github.com/jeff-hykin/iilvd_interface/blob/master/data_format.yaml). Note! most of the fields are <b>optional</b>, so your code will need to check to make sure they exist.
 
 ```
 # get a video
