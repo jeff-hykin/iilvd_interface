@@ -619,7 +619,7 @@ class OracleClass():
         # check the value
         if index in node._boolean_labels:
             log(f"log: END: Oracle.ask()")
-            return node._boolean_labels[frame_index]
+            return node._boolean_labels[index]
         else:
             log(f"log: frame_index out of bounds")
             log(f"log: END: Oracle.ask()")
