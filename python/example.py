@@ -41,7 +41,7 @@ for each_node in Node.random_nodes():
     # access to video-object (see the next for loop for more info)
     print('each_node.database_video = ', each_node.database_video)
     
-    # a way to better understand the labels
+    # this attribute is a way to better understand the labels
     # (kind of a debugging tool, and a way to get around asking the Oracle)
     print('each_node.all_labels = ', each_node.all_labels)
     
