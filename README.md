@@ -1,14 +1,17 @@
-NOTE!: Currently A&M is blocking connections, so this process will fail. I'm working on getting this resolved
-
 # Overview
 - download code with git clone 
-- import a module
-- tell the module what videos you want to retrieve
+- install pip modules
+- connect to the tamu VPN
+- import the classes
+- tell the classes what videos you want to retrieve
 
 # What does repo provide?
 - Lets you query what kinds of videos are avalible
 - Lets you analyze duration, fps, height-in-pixels, related videos, etc
 - Auto-downloads videos and retrieves them frame-by-frame as cv2 images
+
+
+If you have any challenges getting it setup, or if the code is broken, [create an issue on GitHub](https://github.com/jeff-hykin/iilvd_interface/issues)
 
 <br><br>
 
@@ -22,9 +25,9 @@ You'll need
 - python3 (≥3.6)
 - pip3
 - youtube-dl
-- ffmpeg
+- ffmpeg (optional, only needed for a_video.save_frame)
 
-And you'll need all the pip modules mentioned in [requirements.txt](https://github.com/jeff-hykin/iilvd_interface/blob/51b78bad14b93b6b2801d36a6a5890d5fdaeb08b/requirements.txt#L20) 
+You'll also need the pip modules mentioned in [requirements.txt](https://github.com/jeff-hykin/iilvd_interface/blob/51b78bad14b93b6b2801d36a6a5890d5fdaeb08b/requirements.txt#L20) 
 
 ### For MacOS this just means run
 ```
@@ -36,7 +39,7 @@ brew install ffmpeg
 pip3 install $(curl https://raw.githubusercontent.com/jeff-hykin/iilvd_interface/51b78bad14b93b6b2801d36a6a5890d5fdaeb08b/requirements.txt) 
 ```
 ### For Windows 10
-I recommend installing all of them with [Scoop](https://scoop.sh/) or [Chocolatey](https://chocolatey.org/install)<br>but here's some guides encase you don't want to<br>
+I recommend installing all of them with [Scoop](https://scoop.sh/) or [Chocolatey](https://chocolatey.org/install)<br>but here's some guides encase you don't want to use those tools<br>
 [git install guide](https://git-scm.com/book/en/v2/Getting-Started-Installing-Git)<br>
 [python3 guide](https://www.digitalocean.com/community/tutorials/how-to-install-python-3-and-set-up-a-local-programming-environment-on-windows-10)<br>
 [youtube-dl guide](http://ytdl-org.github.io/youtube-dl/download.html)<br>
@@ -51,6 +54,9 @@ Seeing as you are a superior programmer, you've probably installed all those bef
 Make sure you're connected to the TAMU VPN, you'll get a connection error otherwise
 
 ## 3. Your project
+
+If you know what you're doing, you can read this and probably skip parts or do them your own way
+
 - Presumably you have a project of your own in a folder somewhere
 - And presumably you are using git to manage your project
 - (If you don't, then please [make a git repository](https://thegeeksalive.com/how-to-create-a-new-git-repository-and-push-it-to-github/) for your project) 
@@ -75,6 +81,10 @@ Presumably you have a python file, lets say `your_code.py`. <br> And inside `you
    ```
 ## Using the tools
 <br><br><br>
+
+See [the example file here](https://github.com/jeff-hykin/iilvd_interface/blob/236a3b4518fa1ea4230d9fa5c0f1ab5922660f6f/python/example.py)
+
+
 ### Selecting Videos
 Get all the videos, in no particular order, do the following
 ```python
