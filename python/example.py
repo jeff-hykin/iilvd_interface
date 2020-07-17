@@ -23,7 +23,7 @@ for each_node in Node.random_nodes():
     # returns one of:
     #      True = has the label
     #      False = doesn't have the label
-    #      None = index out of bounds
+    #      None = index out of bounds/no label info
     
     # returns a list of neighboring nodes
     # all of these neighbors will exist in the database
